@@ -3,17 +3,11 @@
 Regroups all the collectors that collect data on the targeted pages.
 Those collectors return the data in form of dictionaries."""
 
-import json
-
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
 import time
-import os
-import random
 from init_dict import (
     init_url_dict,
     init_product_dict,
