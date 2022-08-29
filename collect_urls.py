@@ -1,21 +1,20 @@
-import json
+#!/usr/bin/env python
+"""URLs collector.
+
+Crawls the categories list and sends the category URL to the page navigator."""
+
+import os
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.common.exceptions import TimeoutException
+
 from page_navigator import save_products_page_data
-import time
-import os
-import random
+
 from categories import CATEGORIES
-from init_dict import (
-    init_url_dict)
 from const import OPTIONS
 
 PATH_URLS_NEW = os.path.join(os.curdir, 'urls_new')
 PATH_DRIVER = os.path.join(os.curdir, 'chromedriver')
+
 
 
 def main():
