@@ -5,7 +5,10 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
-from data_collector import collect_urls_data, collect_product_data, collect_reviews_data
+from data_collector import (
+    collect_urls_data,
+    collect_product_data,
+    collect_reviews_data)
 from utils import save_data
 
 
@@ -75,6 +78,9 @@ def save_products_page_data(driver, category_dict, paths_urls):
             pass
 
 
+##### ------------------------------------------------ #####
+##### ----------------- PRODUCT PAGE ----------------- #####
+##### ------------------------------------------------ #####
 def save_product_page_data(driver, category_dict, path_products, path_reviews):
     """Collects the data contained in the product page `category_dict['url']`.
 
