@@ -33,3 +33,7 @@ INDUSTRY = 'cosmetic'
 # Collect mode: specific or not specific
 SPECIFIC_URLS_TO_COLLECT = False
 SPECIFIC_KEYWORDS = ['VICHY']
+
+# Search collect mode
+COLLECT_URLS_SEARCH = True
+SEARCH_KEYWORDS = ['Charlotte Tilburry']

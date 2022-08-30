@@ -147,3 +147,66 @@ def save_product_page_data(driver, category_dict, path_products, path_reviews):
         except:
             break
     return product_dict, reviews_dicts
+
+
+def save_products_search_page_data(driver, category_dict, path_urls_search):
+    """Collects and saves the data contained in the products-listing page `category_dict['url_category']`.
+
+            :param driver: selenium webdriver.
+            :param category_dict: dictionary containing the category's URL and its abores.
+            :param paths_urls_search: path of the directory in which the urls will be saved.
+        """
+    # Load the url
+    print("[LOG] Loading the page...")
+    driver.get(category_dict['url_category'])
+    print("[LOG] Current url: {}.".format(category_dict['url_category']))
+    time.sleep(random.uniform(1, 5))
+
+    try:
+        cookie_btn = WebDriverWait(driver, 10).until(ec.presence_of_element_located((
+            By.ID, 'notice-ok')))
+        cookie_btn.click()
+        print("[LOG] Click on the cookies button.")
+        time.sleep(random.uniform(1, 5))
+    except:
+        pass
+
+    while True:
+        try:
+            more_products_btn = WebDriverWait(driver, 10).until(ec.presence_of_element_located((
+                By.CSS_SELECTOR, '#fullcolumn > div.eba-component.loadMoreContainer > div.loadMore > a')))
+            driver.execute_script('arguments[0].scrollIntoView(true);', more_products_btn)
+            driver.execute_script('arguments[0].click();', more_products_btn)
+            print("[LOG] Click on show more products button.")
+            time.sleep(random.uniform(1, 5))
+
+        except TimeoutException:
+            print("[LOG] There isn't any more products to show.")
+            break
+
+        except KeyboardInterrupt:
+            print("[LOG] The collect has been interrupted by the user.")
+            break
+
+        except:
+            break
+
+            # Collect the printed products
+        try:
+            print("[LOG] Start collecting urls data.")
+
+            # Collect urls data
+
+            url_dicts = collect_urls_data(driver, category_dict)
+            # Save the urls data
+            save_data(path_urls_search, url_dicts, 'urls_search')
+
+            print("[LOG] {} urls have been collected.".format(len(url_dicts)))
+
+        except KeyboardInterrupt:
+            print("[LOG] The collect has been interrupted by the user.")
+            pass
+
+        except:
+            print("[LOG] There is an error for the current url.")
+            pass

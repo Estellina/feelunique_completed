@@ -37,7 +37,6 @@ def collect_urls_data(driver, category_dict):
     print("[LOG] Start collecting urls data.")
 
     for i, product in enumerate(products):
-        print('----------------START----------------')
         url_dict = init_url_dict()
         # Product categories
         url_dict['category'] = category_dict['category']
@@ -47,7 +46,7 @@ def collect_urls_data(driver, category_dict):
 
         try:
             url_dict['product_name'] = product.find_element(By.CLASS_NAME, 'Product-summary').text
-            print(url_dict['product_name'])
+
         except:
             pass
 
@@ -55,30 +54,39 @@ def collect_urls_data(driver, category_dict):
             product_prices = product.find_element(By.CLASS_NAME, 'Product-price')
             url_dict['product_price'] = product_prices.find_element(By.TAG_NAME, 'span').text
 
-            print(url_dict['product_price'])
+
         except Exception as e:
             pass
 
         try:
             url_dict['mean_rating'] = product.find_element(By.CSS_SELECTOR, 'span[data-aggregate-rating]') \
                 .get_attribute('data-aggregate-rating')
-            print(url_dict['mean_rating'])
+
         except:
             pass
 
         try:
-            url_dict['n_reviews'] = product.find_element(By.CSS_SELECTOR, 'span[class="Rating-count"]') \
+            url_dict['n_reviews'] = product.find_element(
+                By.CSS_SELECTOR, 'span[class="Rating-count"]') \
                 .get_attribute('data-review-count')
-            print(url_dict['n_reviews'])
+
         except:
             pass
 
         try:
-            url_dict['product_url'] = product.find_element(By.CSS_SELECTOR, 'a[class="Product-link thumb "]') \
+            url_dict['product_url'] = product.find_element(
+                By.CSS_SELECTOR, 'a[class="Product-link thumb "]') \
                 .get_attribute('href')
-            print(url_dict['product_url'])
+
         except:
-            print("did not execute")
+
+            pass
+        try:
+            url_dict['code_sku'] = product.get_attribute('data-sku')
+            print(url_dict['code_sku'])
+
+        except Exception as e:
+            print(e)
             pass
 
         url_dicts.append(url_dict)
