@@ -25,8 +25,8 @@ OPTIONS.add_experimental_option('useAutomationExtension', False)
 OPTIONS.add_experimental_option("excludeSwitches", ['enable-automation'])
 
 COLLECT_DATE = '2022_29_08'
-SOURCE = 'feel-unique_us'
-LANGUAGE = 'us'  # norme ISO language - 639-1
+SOURCE = 'feelunique_us'
+LANGUAGE = 'en'  # norme ISO language - 639-1
 COUNTRY = 'us'  # norme ISO country - alpha 2
 INDUSTRY = 'cosmetic'
 

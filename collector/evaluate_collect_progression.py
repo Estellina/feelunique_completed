@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Collect progression evaluator.
 
-Evaluates the collect progression by counting the collected URLs."""
+Evaluates the collect progression by counting the collected URLs.""" # TODO -> docstring
 
 import json
 import os

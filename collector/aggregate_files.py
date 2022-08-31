@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 """Files aggregator.
 
-Aggregates all the files contained in reviews/ and products/ into merged_products and reviews_files files."""
+Aggregates all the files contained in reviews/ and products/ into merged_products and reviews_files files.""" # TODO -> Aggregates all the files contained in the products and reviews folders into the merged_products and merged_reviews folder.
 
 import glob
 import json
+from json.decoder import JSONDecodeError
 import os
 import time
-
-from json.decoder import JSONDecodeError
 
 from const import (
     COLLECT_DATE,

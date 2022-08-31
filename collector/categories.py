@@ -31,4 +31,5 @@ CATEGORIES = [
     ('Skincare', 'Skin Concerns', 'Neck & Decollete Care', None,'https://us.feelunique.com/skin/skin-concerns/neck-care'),
     ('Skincare', 'Skin Concerns', 'Pigmentation', None,'https://us.feelunique.com/skin/skin-concerns/pigmentation'),
     ('Skincare', 'Skin Concerns', 'Redness', None,'https://us.feelunique.com/skin/skin-concerns/redness')
+    # TODO -> autres catégories
 ]

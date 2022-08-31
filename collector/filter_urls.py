@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Urls filter.
 
-Delete duplicates in the urls_to_filter file."""
+Delete duplicates in the urls_to_filter file.""" # TODO -> docstring
 
 import json
 import os

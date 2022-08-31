@@ -1,7 +1,7 @@
 # !/usr/bin/env python
 """Specific url filter.
 
-Filters specific URLs from urls_to_filter file with the wanted keywords referenced in const.py."""
+Filters specific URLs from urls_to_filter file with the wanted keywords referenced in const.py.""" # TODO -> docstring
 
 import json
 import os
@@ -44,7 +44,7 @@ def select_specific_urls(aggegated_urls, keywords):
                 pass
 
             try:
-                if str(unidecode(keyword).lower()) in str(unidecode(aggregated_url['product_brand']).lower()):
+                if str(unidecode(keyword).lower()) in str(unidecode(aggregated_url['product_brand']).lower()): # TODO -> pas dispo dans les listes d'urls
                     specific_urls.append(aggregated_url)
             except:
                 pass
@@ -56,8 +56,8 @@ def select_specific_urls(aggegated_urls, keywords):
                 pass
 
     if specific_urls:
-
-        # Remove the duplicates
+        # Remove the duplicates 
+        # TODO -> remove the duplicates avec une fonction python + lambda sur une liste
         df = pd.DataFrame(specific_urls)
         df = df.drop_duplicates(subset=['url'], keep='first')
         df = df[['category', 'sub_category', 'sub_sub_category', 'url']]

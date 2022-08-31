@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """URLs collector.
 
-Crawls the categories list and sends the category URL to the page navigator."""
+Crawls the categories list and sends the category URL to the page navigator.""" # TODO -> revoir docstring
 
 import os
 
@@ -16,10 +16,9 @@ PATH_URLS_NEW = os.path.join(os.curdir, 'urls_new')
 PATH_DRIVER = os.path.join(os.curdir, 'chromedriver')
 
 
-
+# TODO -> 2 espaces
 def main():
     for category in CATEGORIES:
-        # Retrieve the values from the dictionary
         category_dict = {
             'category': category[0],
             'sub_category': category[1],
@@ -27,7 +26,6 @@ def main():
             'url_category': category[4]
         }
 
-        # Set the driver
         driver = webdriver.Chrome(PATH_DRIVER, options=OPTIONS)
 
         # Collect urls data

@@ -1,13 +1,16 @@
 """Data collectors.
 
 Regroups all the collectors that collect data on the targeted pages.
-Those collectors return the data in form of dictionaries."""
+Those collectors return the data in form of dictionaries.""" # TODO -> revoir docstring
+
+# import time
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
-import time
+import time # TOdO -> pas ici 
+# 
 from init_dict import (
     init_url_dict,
     init_product_dict,
@@ -111,6 +114,7 @@ def collect_product_data(driver, category_dict):
     product_dict['category'] = category_dict['category']
     product_dict['sub_category'] = category_dict['sub_category']
     product_dict['sub_sub_category'] = category_dict['sub_sub_category']
+    # TODO -> saut de ligne
     # Product name
     try:
         product_dict['product_name'] = driver.find_element(
@@ -138,28 +142,30 @@ def collect_product_data(driver, category_dict):
             By.CSS_SELECTOR, 'span[class="Rating-count"]').text
     except:
         pass
+    # TODO -> saut de ligne
     # Product brand
     try:
         product_dict['brand'] = driver.find_element(
             By.CSS_SELECTOR, 'p[class~="u-flush-v"] strong').text
-
-
+    # TODO -> saut de ligne ?
+    # TODO -> saut de ligne ?
     except:
         pass
     # Product url
     try:
         product_dict['product_url'] = driver.current_url
-
+    # TODO -> saut de ligne ?
     except:
-
+    # TODO -> saut de ligne ?
         pass
-    # mean rating
+    # TODO -> saut de ligne
+    # mean rating # TODO -> Mean rating
     try:
         product_dict['mean_rating'] = driver.find_element(
             By.CSS_SELECTOR, 'span[class="Rating-average"]').get_attribute('data-aggregate-rating')
-
+    # TODO -> saut de ligne
     except:
-
+        # TODO -> saut de ligne
         pass
 
     return product_dict
@@ -179,6 +185,7 @@ def collect_reviews_data(driver, product_dict):
      Returns:
          list: List of dictionaries with reviews data.
      """
+     # TODO -> saut de ligne
     # List of dictionary of reviews
     reviews_data = []
 
@@ -197,9 +204,13 @@ def collect_reviews_data(driver, product_dict):
         print(e)
         pass
 
-    for i, review in enumerate(reviews):
+    for i, review in enumerate(reviews): # for _, review in enumerate(reviews)
         # Initialising the reviews dict
         review_dict = init_reviews_dict()
+
+        # TODO -> ajouter l'id de la review avec "i"
+
+        # TODO -> saut de ligne
         review_dict['category'] = product_dict['category']
         review_dict['sub_category'] = product_dict['sub_category']
         review_dict['sub_sub_category'] = product_dict['sub_sub_category']
@@ -218,14 +229,14 @@ def collect_reviews_data(driver, product_dict):
         except:
             pass
 
-        # Review author
+        # Review author # TODO Writer pseudo
         try:
             review_dict['review_author'] = review.find_element(
                 By.CSS_SELECTOR, 'span[class="bv-author"]').text
         except:
             pass
 
-        # Review content
+        # Review content # TODO Review text
         try:
             review_dict['review_text'] = review.find_element(
                 By.CSS_SELECTOR, 'div[class="bv-content-summary-body-text"]').text
@@ -240,5 +251,8 @@ def collect_reviews_data(driver, product_dict):
             pass
 
         reviews_data.append(review_dict)
+    # TODO -> saut de ligne
+    # TODO pas le saving
     print("[LOG] Saving all the reviews data.")
+    # TODO -> saut de ligne
     return reviews_data

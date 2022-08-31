@@ -1,7 +1,7 @@
 # !/usr/bin/env python
 """Page collector.
 
-Collects data from a single product page by sending the specified URL to the page navigator."""
+Collects data from a single product page by sending the specified URL to the page navigator.""" # TODO -> docstring anglais
 
 import os
 
@@ -17,7 +17,6 @@ PATH_DRIVER = os.path.join(os.curdir, 'chromedriver')
 
 
 def main():
-    # Select the url
     category_dict = {
         'url': 'https://us.feelunique.com/p/Lixir-Skin-Universal-Emulsion-100ml',
         'category': 'Skincare',
@@ -25,7 +24,6 @@ def main():
         'sub_sub_category': 'Day Creams'
     }
 
-    # Load the driver
     driver = webdriver.Chrome(PATH_DRIVER, options=OPTIONS)
 
     # Collect product and reviews data

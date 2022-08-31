@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """URLs aggregator.
 
-Aggregates all the files contained in /urls_new into  aggregated_urls and urls_to_filter files."""
+Aggregates all the files contained in /urls_new into  aggregated_urls and urls_to_filter files.""" # TODO -> refaire le TODO anglais
 
 import glob
 import json
@@ -41,7 +41,7 @@ def aggregate_urls():
               encoding='utf-8') as file_to_dump:
         json.dump(new_urls_dicts, file_to_dump, indent=4, ensure_ascii=False)
 
-    # Save the aggregated urls in 'urls_to_filter' folder
+    # Save the aggregated urls in 'urls_to_filter' folder # TODO -> faire cette étape avec une liste + fonction lambda
     df = pd.DataFrame(new_urls_dicts)
     df = df.drop_duplicates(['product_url'])
     urls_filtered_list = df.to_dict(orient='records')

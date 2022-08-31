@@ -2,7 +2,7 @@
 """Pages collector.
 
 Starts the collect of multiple pages by cycling through dictionaries found in urls_to_collect files,
-sends for each product its URL and category information to the pages navigators."""
+sends for each product its URL and category information to the pages navigators.""" # TODO -> revoir docstring
 
 import json
 import os
@@ -64,7 +64,7 @@ def main():
                     PATH_REVIEWS
                 )
 
-                # Change the status of the current url and save it.
+                # Change the status of the current url and save it. # TODO -> remove les points
                 # --------------------------------------------------------
                 # Step 1: Verify if the product has a name
                 if product_dict['product_name']:
@@ -73,18 +73,18 @@ def main():
                     if product_dict['n_reviews']:
 
                         # Step 3: Verify if the product has at least 1 review
-                        if int(product_dict['n_reviews']) > 0:
+                        if int(product_dict['n_reviews']) > 0: # TODO -> il y a un probleme dans la collect_pages car n_reviews est au format "X reviews" -> convertion vers int genere une erreur
 
                             # Step 4: Verify that reviews have been collected
                             # The length of collected reviews is equal to the printed number of reviews on
-                            # the current product page, so all the reviews have been collected.
+                            # the current product page, so all the reviews have been collected. # TODO -> remove les points
                             if len(reviews_dicts) >= int(product_dict['n_reviews']):
                                 url_dict['collected'] = 'yes'
                                 print("[LOG] All the reviews have been collected for the product.")
 
                             # Step 4 (if not): Not all reviews have been collected
                             # The length of collected reviews isn't equal to the printed number of reviews on
-                            # the current product page, so not all the reviews have been collected.
+                            # the current product page, so not all the reviews have been collected. # TODO -> remove les points
                             else:
                                 url_dict['collected'] = 'once'
                                 print("[LOG] Not all the reviews have been collected for the product.")
@@ -105,8 +105,8 @@ def main():
                 # Step 1 (if not): The page data didn't load
                 else:
                     # If the page data didn't load
-                    # The collect for the current url has raised some errors.
-                    # The url is set as 'issue'.
+                    # The collect for the current url has raised some errors. # TODO -> remove les points
+                    # The url is set as 'issue'. # TODO -> remove les points
                     url_dict['collected'] = 'issue'
                     print("[LOG] Issue with the current url. Saved as url with issues.")
 

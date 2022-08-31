@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Utils.
 
-Contains all the tool functions useful in various steps of the collect."""
+Contains all the tool functions useful in various steps of the collect.""" # TODO -> docstring
 
 import json
 import os
@@ -12,10 +12,6 @@ from const import (
     SOURCE
 )
 
-
-##### ------------------------------------------------------------ #####
-##### ---------------------- SAVING PROCESS ---------------------- #####
-##### ------------------------------------------------------------ #####
 
 def save_data(path, data, saved_data_type):
     """Saves the collected data.
