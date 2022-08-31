@@ -17,7 +17,7 @@ def init_url_dict():
         'product_name': None,
         'product_price': None,
         'mean_rating': None,
-        'code-sku': None,
+        'code_sku': None,
     }
     return url_dict
 

@@ -83,7 +83,7 @@ def collect_urls_data(driver, category_dict):
             pass
         try:
             url_dict['code_sku'] = product.get_attribute('data-sku')
-            print(url_dict['code_sku'])
+
 
         except Exception as e:
             print(e)
