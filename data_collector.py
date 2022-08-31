@@ -1,13 +1,14 @@
 """Data collectors.
 
 Regroups all the collectors that collect data on the targeted pages.
-Those collectors return the data in form of dictionaries."""
+Those collectors return the data in the form of dictionaries."""
+import time
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
-import time
+
 from init_dict import (
     init_url_dict,
     init_product_dict,
@@ -37,56 +38,56 @@ def collect_urls_data(driver, category_dict):
     print("[LOG] Start collecting urls data.")
 
     for i, product in enumerate(products):
+        # Initialising the url_dict
         url_dict = init_url_dict()
+
         # Product categories
         url_dict['category'] = category_dict['category']
         url_dict['sub_category'] = category_dict['sub_category']
         url_dict['sub_sub_category'] = category_dict['sub_sub_category']
         url_dict['url_category'] = category_dict['url_category']
 
+        # Product name
         try:
             url_dict['product_name'] = product.find_element(By.CLASS_NAME, 'Product-summary').text
 
         except:
             pass
 
+        # Product price
         try:
             product_prices = product.find_element(By.CLASS_NAME, 'Product-price')
             url_dict['product_price'] = product_prices.find_element(By.TAG_NAME, 'span').text
 
-
-        except Exception as e:
+        except:
             pass
 
+        # Mean rating
         try:
-            url_dict['mean_rating'] = product.find_element(By.CSS_SELECTOR, 'span[data-aggregate-rating]') \
+            url_dict['Mean_rating'] = product.find_element(By.CSS_SELECTOR, 'span[data-aggregate-rating]') \
                 .get_attribute('data-aggregate-rating')
-
         except:
             pass
 
+        # reviews count
         try:
-            url_dict['n_reviews'] = product.find_element(
-                By.CSS_SELECTOR, 'span[class="Rating-count"]') \
-                .get_attribute('data-review-count')
-
+            url_dict['n_reviews'] = int(product.find_element(By.CSS_SELECTOR, 'span[class="Rating-count"]') \
+                .get_attribute('data-review-count').text.split(' ')[0])
+            print(url_dict['n_reviews'])
         except:
             pass
 
+        # product url
         try:
-            url_dict['product_url'] = product.find_element(
-                By.CSS_SELECTOR, 'a[class="Product-link thumb "]') \
+            url_dict['product_url'] = product.find_element(By.CSS_SELECTOR, 'a[class="Product-link thumb "]') \
                 .get_attribute('href')
-
         except:
-
             pass
+
+        # code sku
         try:
             url_dict['code_sku'] = product.get_attribute('data-sku')
-
-
-        except Exception as e:
-            print(e)
+        except:
             pass
 
         url_dicts.append(url_dict)
@@ -119,6 +120,7 @@ def collect_product_data(driver, category_dict):
     product_dict['category'] = category_dict['category']
     product_dict['sub_category'] = category_dict['sub_category']
     product_dict['sub_sub_category'] = category_dict['sub_sub_category']
+
     # Product name
     try:
         product_dict['product_name'] = driver.find_element(
@@ -142,32 +144,37 @@ def collect_product_data(driver, category_dict):
 
     # Review count
     try:
-        product_dict['n_reviews'] = driver.find_element(
-            By.CSS_SELECTOR, 'span[class="Rating-count"]').text
+        product_dict['n_reviews'] = int(driver.find_element(
+            By.CSS_SELECTOR, 'span[class="Rating-count"]').text.split(' ')[0])
+
     except:
         pass
+
     # Product brand
     try:
-        product_dict['brand'] = driver.find_element(
+        product_dict['product_brand'] = driver.find_element(
             By.CSS_SELECTOR, 'p[class~="u-flush-v"] strong').text
-
-
     except:
         pass
+
+    # code sku
+    try:
+        product_dict['code_sku'] = driver.find_element(
+            By.CSS_SELECTOR, 'div[class="item"] >form [class="add-to-wishlist wishHeart"]').get_attribute('data-sku')
+    except:
+        pass
+
     # Product url
     try:
         product_dict['product_url'] = driver.current_url
-
     except:
-
         pass
+
     # mean rating
     try:
-        product_dict['mean_rating'] = driver.find_element(
+        product_dict['Mean_rating'] = driver.find_element(
             By.CSS_SELECTOR, 'span[class="Rating-average"]').get_attribute('data-aggregate-rating')
-
     except:
-
         pass
 
     return product_dict
@@ -187,6 +194,7 @@ def collect_reviews_data(driver, product_dict):
      Returns:
          list: List of dictionaries with reviews data.
      """
+
     # List of dictionary of reviews
     reviews_data = []
 
@@ -205,12 +213,17 @@ def collect_reviews_data(driver, product_dict):
         print(e)
         pass
 
-    for i, review in enumerate(reviews):
+    for _, review in enumerate(reviews):
+
         # Initialising the reviews dict
         review_dict = init_reviews_dict()
+
+        review_dict['product_name'] = product_dict['product_name']
+        review_dict['product_brand'] = product_dict['product_brand']
         review_dict['category'] = product_dict['category']
         review_dict['sub_category'] = product_dict['sub_category']
         review_dict['sub_sub_category'] = product_dict['sub_sub_category']
+        review_dict['url_product'] = product_dict['url']
 
         # Review rating
         try:
@@ -228,7 +241,7 @@ def collect_reviews_data(driver, product_dict):
 
         # Review author
         try:
-            review_dict['review_author'] = review.find_element(
+            review_dict['writer_pseudo'] = review.find_element(
                 By.CSS_SELECTOR, 'span[class="bv-author"]').text
         except:
             pass
@@ -243,7 +256,32 @@ def collect_reviews_data(driver, product_dict):
         # Review date
         try:
             review_dict['review_date'] = review.find_element(
-                By.CSS_SELECTOR, 'span[class="bv-content-datetime-stamp"]').text.strip()
+                By.CSS_SELECTOR, 'meta[itemprop="datePublished"]').get_attribute('content')
+        except:
+            pass
+
+        # review text strengths
+        try:
+            review_dict['review_text_strengths'] = []
+            elements = review.find_elements(
+                By.CSS_SELECTOR, 'li[class="bv-popup-histogram-ratings-bar"] > span > span:last-child')
+            for element in elements:
+                review_dict['review_text_strengths'].append(element.text)
+        except:
+            pass
+
+        # writer's recommendation
+        try:
+            review_dict['writer_recommendation'] = review.find_element(
+                By.CSS_SELECTOR, 'div[class="bv-content-data-recommend-yes"] > div[class="bv-content-data-value"] > '
+                                 'span:last-child').text
+        except:
+            pass
+
+        # verified purchase
+        try:
+            review_dict['verified_purchase'] = review.find_element(
+                By.CSS_SELECTOR, 'span[class="bv-badge-label"]').text
         except:
             pass
 

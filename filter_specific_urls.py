@@ -10,7 +10,7 @@ import time
 import pandas as pd
 from unidecode import unidecode
 
-from const import (
+from collector.const import (
     COLLECT_DATE,
     SOURCE,
     SPECIFIC_KEYWORDS

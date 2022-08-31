@@ -6,7 +6,7 @@ Evaluates the collect progression by counting the collected URLs."""
 import json
 import os
 
-from const import (
+from collector.const import (
     SOURCE,
     COLLECT_DATE,
     SPECIFIC_URLS_TO_COLLECT,

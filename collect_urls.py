@@ -8,13 +8,14 @@ import os
 from selenium import webdriver
 
 from page_navigator import save_products_page_data
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 from categories import CATEGORIES
 from const import OPTIONS
 
 PATH_URLS_NEW = os.path.join(os.curdir, 'urls_new')
 PATH_DRIVER = os.path.join(os.curdir, 'chromedriver')
-
 
 
 def main():
@@ -28,7 +29,7 @@ def main():
         }
 
         # Set the driver
-        driver = webdriver.Chrome(PATH_DRIVER, options=OPTIONS)
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=OPTIONS)
 
         # Collect urls data
         _ = save_products_page_data(driver, category_dict, PATH_URLS_NEW)
